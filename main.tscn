@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://6grk4sqfxulq"]
+[gd_scene load_steps=30 format=3 uid="uid://6grk4sqfxulq"]
 
 [ext_resource type="Script" uid="uid://bews7y8djq0iw" path="res://main.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://e345ix4bm7w1" path="res://pond/pond.tscn" id="2_1bvp3"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://u6racrkj0k5y" path="res://attraction_point.gd" id="5_lquwl"]
 [ext_resource type="Texture2D" uid="uid://doy2jjipf4en6" path="res://ui/timer_outline.png" id="6_4c57u"]
 [ext_resource type="Script" uid="uid://gl7lt53lsoy7" path="res://ui/score.gd" id="7_efxa6"]
+[ext_resource type="Texture2D" uid="uid://c7aq8mubim5gb" path="res://logo.png" id="8_1u8w0"]
 [ext_resource type="PackedScene" uid="uid://nvpcmwbmt3rb" path="res://ui/keypress.tscn" id="8_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://b8shenuskhmvu" path="res://ui/square.png" id="9_w48qg"]
 [ext_resource type="AudioStream" uid="uid://ckcs2lkoyrgh2" path="res://ui/catch/pop.wav" id="10_2cqfq"]
@@ -195,30 +196,21 @@ patch_margin_right = 15
 patch_margin_bottom = 15
 
 [node name="opening" type="Control" parent="ui"]
-visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="score" type="Label" parent="ui/opening"]
-layout_mode = 0
-offset_left = 299.0
-offset_top = 222.0
-offset_right = 859.0
-offset_bottom = 344.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 16
-theme_override_fonts/font = ExtResource("2_lquwl")
-theme_override_font_sizes/font_size = 64
-text = "[insert game logo]"
+[node name="Sprite2D" type="Sprite2D" parent="ui/opening"]
+position = Vector2(570, 270)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("8_1u8w0")
 
 [node name="multiplier" type="Label" parent="ui/opening"]
 layout_mode = 0
 offset_left = 436.0
-offset_top = 347.0
+offset_top = 451.0
 offset_right = 724.0
-offset_bottom = 410.0
+offset_bottom = 514.0
 theme_override_fonts/font = ExtResource("2_lquwl")
 theme_override_font_sizes/font_size = 24
 text = "pull rope taut to begin.
@@ -299,7 +291,7 @@ offset_right = 798.0
 offset_bottom = 413.0
 theme_override_fonts/font = ExtResource("2_lquwl")
 theme_override_font_sizes/font_size = 24
-text = "pull rope REALLY HARD when fishes are there to capture the fish."
+text = "pull rope completely down when fishes are there to capture the fish."
 horizontal_alignment = 1
 autowrap_mode = 2
 
@@ -406,10 +398,10 @@ position = Vector2(554, 318)
 visible = false
 
 [node name="RichTextLabel" type="RichTextLabel" parent="ui/catch"]
-offset_left = 61.0
+offset_left = 233.0
 offset_top = 43.0
-offset_right = 1062.0
-offset_bottom = 295.0
+offset_right = 903.0
+offset_bottom = 306.0
 theme_override_fonts/normal_font = ExtResource("2_lquwl")
 theme_override_font_sizes/normal_font_size = 80
 bbcode_enabled = true
@@ -422,7 +414,14 @@ vertical_alignment = 1
 stream = ExtResource("10_2cqfq")
 volume_db = -16.0
 
+[node name="Sprite2D" type="Sprite2D" parent="ui"]
+visible = false
+position = Vector2(579, 324)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("8_1u8w0")
+
 [node name="gameover" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
