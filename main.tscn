@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://6grk4sqfxulq"]
+[gd_scene load_steps=29 format=3 uid="uid://6grk4sqfxulq"]
 
 [ext_resource type="Script" uid="uid://bews7y8djq0iw" path="res://main.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://e345ix4bm7w1" path="res://pond/pond.tscn" id="2_1bvp3"]
@@ -13,6 +13,16 @@
 [ext_resource type="Script" uid="uid://gl7lt53lsoy7" path="res://ui/score.gd" id="7_efxa6"]
 [ext_resource type="PackedScene" uid="uid://nvpcmwbmt3rb" path="res://ui/keypress.tscn" id="8_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://b8shenuskhmvu" path="res://ui/square.png" id="9_w48qg"]
+[ext_resource type="AudioStream" uid="uid://ckcs2lkoyrgh2" path="res://ui/catch/pop.wav" id="10_2cqfq"]
+[ext_resource type="AudioStream" uid="uid://ddbradimgc0u7" path="res://ost.wav" id="14_w48qg"]
+[ext_resource type="AudioStream" uid="uid://cdnryintsj0r7" path="res://rope/sfx/rope_catch.wav" id="15_vivmo"]
+[ext_resource type="AudioStream" uid="uid://cqbrao1e6uajq" path="res://pond/bubble audio/bubble1.wav" id="17_d13ii"]
+[ext_resource type="AudioStream" uid="uid://5172dnf52s7m" path="res://pond/bubble audio/bubble2.wav" id="18_1u8w0"]
+[ext_resource type="AudioStream" uid="uid://bjckv56sbx5jy" path="res://pond/bubble audio/bubble3.wav" id="19_0odxb"]
+[ext_resource type="AudioStream" uid="uid://cshcdbo0fhxtv" path="res://pond/bubble audio/bubble4.wav" id="20_lswn8"]
+[ext_resource type="AudioStream" uid="uid://bb0it2r0hfvn2" path="res://pond/bubble audio/bubble5.wav" id="21_a6jrf"]
+[ext_resource type="AudioStream" uid="uid://bco4y5jrpmtay" path="res://pond/bubble audio/bubble6.wav" id="22_xuqvo"]
+[ext_resource type="AudioStream" uid="uid://dclm4qsr8gncr" path="res://pond/bubble audio/bubble7.wav" id="23_qsp4k"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kek77"]
 shader = ExtResource("2_5vw27")
@@ -50,6 +60,16 @@ volumetric_fog_length = 5.0
 radius = 2.30408
 height = 10.5465
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_kq58d"]
+streams_count = 7
+stream_0/stream = ExtResource("17_d13ii")
+stream_1/stream = ExtResource("18_1u8w0")
+stream_2/stream = ExtResource("19_0odxb")
+stream_3/stream = ExtResource("20_lswn8")
+stream_4/stream = ExtResource("21_a6jrf")
+stream_5/stream = ExtResource("22_xuqvo")
+stream_6/stream = ExtResource("23_qsp4k")
+
 [node name="main" type="Node3D"]
 script = ExtResource("1_h2yge")
 
@@ -58,19 +78,6 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-
-[node name="catching" type="Label" parent="ui"]
-visible = false
-layout_mode = 0
-offset_left = 413.0
-offset_top = 226.0
-offset_right = 782.0
-offset_bottom = 405.0
-theme_override_fonts/font = ExtResource("2_lquwl")
-theme_override_font_sizes/font_size = 64
-text = "CONGRATS
-U GOT FISH."
-horizontal_alignment = 1
 
 [node name="multiplier" type="Label" parent="ui"]
 layout_mode = 0
@@ -121,7 +128,8 @@ theme_override_constants/outline_size = 16
 theme_override_fonts/normal_font = ExtResource("2_lquwl")
 theme_override_font_sizes/normal_font_size = 64
 bbcode_enabled = true
-text = "120"
+text = "0
+"
 autowrap_mode = 1
 script = ExtResource("7_efxa6")
 
@@ -410,6 +418,10 @@ vertical_alignment = 1
 
 [node name="anim" type="AnimationPlayer" parent="ui/catch"]
 
+[node name="pop" type="AudioStreamPlayer" parent="ui/catch"]
+stream = ExtResource("10_2cqfq")
+volume_db = -16.0
+
 [node name="gameover" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -505,6 +517,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.6664, 7.991, -5.82974)
 
 [node name="center" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.17799, 7.991, -8.07649)
+
+[node name="ost" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_w48qg")
+volume_db = -5.0
+autoplay = true
+
+[node name="rope_catch" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_vivmo")
+volume_db = -5.0
+
+[node name="bubble" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_kq58d")
+volume_db = -16.0
 
 [connection signal="area_entered" from="attraction" to="." method="_on_attraction_area_entered"]
 [connection signal="area_entered" from="attraction" to="attraction" method="_on_area_entered"]

@@ -48,7 +48,7 @@ func catch(type, fishes):
 		$one/fish_sprite.animate()
 		$one.visible = true
 		
-		await get_tree().create_timer(2).timeout 
+		await get_tree().create_timer(1.5).timeout 
 		$one/fish_sprite.end_animation()
 	
 
@@ -60,7 +60,7 @@ func catch(type, fishes):
 		$two/fish_sprite2.animate(0.2)
 		$two.visible = true 
 		
-		await get_tree().create_timer(2).timeout 
+		await get_tree().create_timer(1.5).timeout 
 		$two/fish_sprite.end_animation()
 		$two/fish_sprite2.end_animation()
 		#$two/Sprite2D2.texture = fish_sprites[fishes[0]]
@@ -77,7 +77,7 @@ func catch(type, fishes):
 		$three.visible = true 
 		
 		
-		await get_tree().create_timer(2).timeout 
+		await get_tree().create_timer(1.5).timeout 
 		$three/fish_sprite.end_animation()
 		$three/fish_sprite2.end_animation()
 		$three/fish_sprite3.end_animation()
@@ -104,9 +104,9 @@ func catch(type, fishes):
 			new_sprite.animate(delay)
 			delay += 0.2
 		
-		await get_tree().create_timer(2).timeout 
+		await get_tree().create_timer(1.5).timeout 
 		
-		for item in sprite_scenes:
+		for item in sprite_scenes: 
 			if item:
 				item.end_animation()
 			

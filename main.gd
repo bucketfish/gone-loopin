@@ -32,6 +32,8 @@ var catch_threshold = 0.7
 var tutorial4_count = 0
 var tutorial5_count = 0
 
+var bubble_countdown = 10
+
 func _ready():
 	$ui/multiplier.modulate.a = 0.0
 	$ui/score.modulate.a = 0.0
@@ -176,6 +178,8 @@ func start_tutorial6():
 	await tween.finished
 	tween.kill()
 	
+	game_phase = "tutorial6"
+	
 	kill_all_fish()
 	
 	await get_tree().create_timer(1).timeout
@@ -183,9 +187,15 @@ func start_tutorial6():
 	tween = create_tween()
 	tween.tween_property($ui/tutorial6, "modulate:a", 1.0, 0.2)
 	
-	game_phase = "tutorial6"
+	
 	
 func _process(delta):
+	
+	bubble_countdown -= delta
+	
+	if bubble_countdown < 0:
+		bubble_countdown = randf_range(8.0, 20.0)
+		$bubble.play()
 	
 	if Input.is_action_just_pressed("debug"):
 		timer -= 55
@@ -294,6 +304,9 @@ func return_end_items():
 	
 func catch_fish():
 	
+	if !$rope_catch.playing:
+		$rope_catch.play()
+	
 	if game_phase == "opening":
 		start_tutorial1()
 		
@@ -324,6 +337,8 @@ func catch_fish():
 		var types = {}
 		var total = []
 		
+		
+		
 		if game_phase == "game":
 			if catch_timer > catch_threshold && !caught_fishes.is_empty():
 				catch_timer = 0
@@ -340,6 +355,8 @@ func catch_fish():
 			
 		
 		if caught_fishes:
+			
+
 			
 			if game_phase == "tutorial4":
 				tutorial4_count += 1

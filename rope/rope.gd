@@ -206,6 +206,8 @@ func applyconstaints():
 
 			
 func add_segment_left():
+	if !$rope_move.playing:
+		$rope_move.play()
 	var dir = (points_now[0] - points_now[1]).normalized()
 	var spacing = (points_now[0] - points_now[1]).length()
 	var new_pos = points_now[0] + dir * spacing
@@ -221,6 +223,8 @@ func add_segment_left():
 	add_child(new_segment)
 
 func add_segment_right():
+	if !$rope_move.playing:
+		$rope_move.play()
 	var last = points_now.size() - 1
 	var dir = (points_now[last] - points_now[last - 1]).normalized()
 	var spacing = (points_now[last] - points_now[last - 1]).length()
@@ -242,6 +246,8 @@ func add_segment_right():
 	
 	
 func remove_segment_left():
+	if !$rope_move.playing:
+		$rope_move.play()
 	if points_now.size() <= 2:
 		return  # prevent deleting too much
 
@@ -257,6 +263,8 @@ func remove_segment_left():
 		taut_rope()
 
 func remove_segment_right():
+	if !$rope_move.playing:
+		$rope_move.play()
 	if points_now.size() <= 2:
 		return  # prevent deleting too much
 

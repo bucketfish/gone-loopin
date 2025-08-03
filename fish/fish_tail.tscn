@@ -12,9 +12,9 @@ mesh = ExtResource("2_scb5u")
 mesh = ExtResource("2_scb5u")
 
 [node name="body3" parent="." index="2"]
-transform = Transform3D(2.86603e-15, 6.55671e-08, -1.5, 1.5, -6.55671e-08, 1.37643e-21, -6.55671e-08, -1.5, -6.55671e-08, 0, 0, 0)
+transform = Transform3D(2.86603e-15, 6.55671e-08, -1.5, 1.5, -6.55671e-08, 1.79994e-21, -6.55671e-08, -1.5, -6.55671e-08, 0, 0, 0)
 mesh = ExtResource("2_scb5u")
 
 [node name="body4" parent="." index="3"]
-transform = Transform3D(2.86603e-15, 6.55671e-08, -1.5, 1.5, -6.55671e-08, 1.37643e-21, -6.55671e-08, -1.5, -6.55671e-08, 0, 0, 0)
+transform = Transform3D(2.86603e-15, 6.55671e-08, -1.5, 1.5, -6.55671e-08, 1.79994e-21, -6.55671e-08, -1.5, -6.55671e-08, 0, 0, 0)
 mesh = ExtResource("2_scb5u")
