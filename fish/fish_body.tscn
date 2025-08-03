@@ -1,0 +1,125 @@
+[gd_scene load_steps=11 format=3 uid="uid://dch413nc7syvy"]
+
+[ext_resource type="Script" uid="uid://1hai0abfg5i8" path="res://fish/fish_body.gd" id="1_pneki"]
+[ext_resource type="Material" uid="uid://ecudgcyjiwps" path="res://fish/types/green.tres" id="2_hcyyj"]
+[ext_resource type="Shader" uid="uid://doksdep1pslhv" path="res://outline.gdshader" id="3_hcyyj"]
+[ext_resource type="Shader" uid="uid://xeoi32xushxd" path="res://fish/pulse.gdshader" id="4_d45w7"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_44vfn"]
+resource_local_to_scene = true
+top_radius = 0.6
+height = 0.5
+radial_segments = 16
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d45w7"]
+render_priority = -1
+shader = ExtResource("3_hcyyj")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2kxd0"]
+render_priority = -1
+shader = ExtResource("4_d45w7")
+shader_parameter/color = Color(0.682353, 0.345098, 0.305882, 0.45098)
+
+[sub_resource type="Animation" id="Animation_d45w7"]
+resource_name = "pulse"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("body3:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.5, 1.5, 1.5), Vector3(2.5, 2.5, 2.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("body4:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.5, 1.5, 1.5), Vector3(2.5, 2.5, 2.5)]
+}
+
+[sub_resource type="Animation" id="Animation_2kxd0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("body3:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.5, 1.5, 1.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("body4:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.5, 1.5, 1.5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2kxd0"]
+_data = {
+&"RESET": SubResource("Animation_2kxd0"),
+&"pulse": SubResource("Animation_d45w7")
+}
+
+[node name="fish_body" type="Node3D"]
+script = ExtResource("1_pneki")
+
+[node name="body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, 0, 0, 0)
+material_override = ExtResource("2_hcyyj")
+mesh = SubResource("CylinderMesh_44vfn")
+skeleton = NodePath("../..")
+
+[node name="body2" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.86603e-15, 6.55671e-08, -1.5, 1.5, -6.55671e-08, 5.39984e-21, -6.55671e-08, -1.5, -6.55671e-08, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_d45w7")
+cast_shadow = 0
+ignore_occlusion_culling = true
+mesh = SubResource("CylinderMesh_44vfn")
+skeleton = NodePath("../..")
+
+[node name="body3" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.86603e-15, 6.55671e-08, -1.5, 1.5, -6.55671e-08, 5.82335e-21, -6.55671e-08, -1.5, -6.55671e-08, 0, 0, 0)
+visible = false
+material_override = SubResource("ShaderMaterial_2kxd0")
+transparency = 0.52
+cast_shadow = 0
+ignore_occlusion_culling = true
+mesh = SubResource("CylinderMesh_44vfn")
+skeleton = NodePath("../..")
+
+[node name="body4" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.86603e-15, 6.55671e-08, -1.5, 1.5, -6.55671e-08, 5.82335e-21, -6.55671e-08, -1.5, -6.55671e-08, 0, 0, 0)
+visible = false
+material_override = SubResource("ShaderMaterial_2kxd0")
+transparency = 0.52
+cast_shadow = 0
+ignore_occlusion_culling = true
+mesh = SubResource("CylinderMesh_44vfn")
+skeleton = NodePath("../..")
+
+[node name="anim" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_2kxd0")
+}

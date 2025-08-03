@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://nvpcmwbmt3rb"]
+
+[ext_resource type="FontFile" uid="uid://co4qn8hfjxed2" path="res://fredoka-one.ttf" id="1_0n41p"]
+[ext_resource type="Script" uid="uid://droro82vqldvn" path="res://ui/keypress.gd" id="1_t6xwr"]
+[ext_resource type="Texture2D" uid="uid://ctean5lqm0xom" path="res://ui/arrow.png" id="2_t6xwr"]
+
+[node name="keypress" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_t6xwr")
+
+[node name="key" type="Label" parent="."]
+layout_mode = 0
+offset_left = -62.0
+offset_top = -9.0
+offset_right = -1.0
+offset_bottom = 113.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_fonts/font = ExtResource("1_0n41p")
+theme_override_font_sizes/font_size = 48
+text = "w"
+horizontal_alignment = 1
+
+[node name="Arrow" type="Sprite2D" parent="."]
+position = Vector2(3.43323e-05, -0.6)
+texture = ExtResource("2_t6xwr")

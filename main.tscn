@@ -1,0 +1,487 @@
+[gd_scene load_steps=18 format=3 uid="uid://6grk4sqfxulq"]
+
+[ext_resource type="Script" uid="uid://bews7y8djq0iw" path="res://main.gd" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://e345ix4bm7w1" path="res://pond/pond.tscn" id="2_1bvp3"]
+[ext_resource type="Shader" uid="uid://dww10f23fxba5" path="res://postprocessing.gdshader" id="2_5vw27"]
+[ext_resource type="Script" uid="uid://c1o2urmnxn4js" path="res://ui/catch.gd" id="2_272bh"]
+[ext_resource type="FontFile" uid="uid://co4qn8hfjxed2" path="res://fredoka-one.ttf" id="2_lquwl"]
+[ext_resource type="PackedScene" uid="uid://dnqjs8g3tj2d5" path="res://ui/catch/fish_sprite.tscn" id="3_4c57u"]
+[ext_resource type="PackedScene" uid="uid://rges1bqhucnb" path="res://rope/rope.tscn" id="3_lquwl"]
+[ext_resource type="Script" uid="uid://be6dx7rbvheq5" path="res://ui/timer.gd" id="5_kek77"]
+[ext_resource type="Script" uid="uid://u6racrkj0k5y" path="res://attraction_point.gd" id="5_lquwl"]
+[ext_resource type="Texture2D" uid="uid://doy2jjipf4en6" path="res://ui/timer_outline.png" id="6_4c57u"]
+[ext_resource type="Script" uid="uid://gl7lt53lsoy7" path="res://ui/score.gd" id="7_efxa6"]
+[ext_resource type="PackedScene" uid="uid://nvpcmwbmt3rb" path="res://ui/keypress.tscn" id="8_ycdy4"]
+[ext_resource type="Texture2D" uid="uid://b8shenuskhmvu" path="res://ui/square.png" id="9_w48qg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kek77"]
+shader = ExtResource("2_5vw27")
+shader_parameter/resolution = Vector2(800, 450)
+shader_parameter/scan_line_amount = 0.5
+shader_parameter/warp_amount = 0.2
+shader_parameter/noise_amount = 0.01
+shader_parameter/interference_amount = 0.01
+shader_parameter/grille_amount = 0.01
+shader_parameter/grille_size = 5.0
+shader_parameter/vignette_amount = 0.5
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/aberation_amount = 0.4
+shader_parameter/roll_line_amount = 0.0
+shader_parameter/roll_speed = 1.0
+shader_parameter/scan_line_strength = -8.0
+shader_parameter/pixel_strength = -4.0
+
+[sub_resource type="Sky" id="Sky_el166"]
+
+[sub_resource type="Environment" id="Environment_el166"]
+sky = SubResource("Sky_el166")
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.8
+fog_light_color = Color(0.476218, 0.686818, 0.768656, 1)
+fog_light_energy = 1.67
+fog_density = 0.005
+fog_sky_affect = 0.905
+volumetric_fog_emission = Color(0.404802, 0.679027, 0.773572, 1)
+volumetric_fog_emission_energy = 0.5
+volumetric_fog_length = 5.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1bvp3"]
+radius = 2.30408
+height = 10.5465
+
+[node name="main" type="Node3D"]
+script = ExtResource("1_h2yge")
+
+[node name="ui" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="catching" type="Label" parent="ui"]
+visible = false
+layout_mode = 0
+offset_left = 413.0
+offset_top = 226.0
+offset_right = 782.0
+offset_bottom = 405.0
+theme_override_fonts/font = ExtResource("2_lquwl")
+theme_override_font_sizes/font_size = 64
+text = "CONGRATS
+U GOT FISH."
+horizontal_alignment = 1
+
+[node name="multiplier" type="Label" parent="ui"]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 122.0
+offset_right = 182.0
+offset_bottom = 145.0
+theme_override_fonts/font = ExtResource("2_lquwl")
+theme_override_font_sizes/font_size = 24
+text = "1x multiplier"
+
+[node name="timer" type="Node2D" parent="ui"]
+script = ExtResource("5_kek77")
+
+[node name="background" type="Line2D" parent="ui/timer"]
+visible = false
+position = Vector2(576, 50)
+points = PackedVector2Array(500, 0, -500, 0)
+width = 25.0
+default_color = Color(0, 0, 0, 0.32549)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="line" type="Line2D" parent="ui/timer"]
+modulate = Color(0.403922, 0.647059, 0.411765, 1)
+position = Vector2(576, 50)
+points = PackedVector2Array(-487.5, 0, 487.5, 0)
+width = 25.0
+default_color = Color(0.4, 1, 0.42, 0.647059)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="ui/timer"]
+self_modulate = Color(1, 1, 1, 0.247059)
+position = Vector2(576, 50)
+texture = ExtResource("6_4c57u")
+
+[node name="score" type="Label" parent="ui"]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 46.0
+offset_right = 145.0
+offset_bottom = 168.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_fonts/font = ExtResource("2_lquwl")
+theme_override_font_sizes/font_size = 64
+text = "0"
+script = ExtResource("7_efxa6")
+
+[node name="controls" type="Control" parent="ui"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="keypress" parent="ui/controls" instance=ExtResource("8_ycdy4")]
+offset_left = 191.0
+offset_top = 501.0
+offset_right = 231.0
+offset_bottom = 541.0
+key_display = "w"
+key_to_press = "left_extend"
+
+[node name="keypress3" parent="ui/controls" instance=ExtResource("8_ycdy4")]
+offset_left = 992.0
+offset_top = 501.0
+offset_right = 1032.0
+offset_bottom = 541.0
+key_display = "i"
+key_to_press = "right_extend"
+
+[node name="Arrow" parent="ui/controls/keypress3" index="1"]
+position = Vector2(-65, -0.999994)
+
+[node name="keypress2" parent="ui/controls" instance=ExtResource("8_ycdy4")]
+offset_left = 191.0
+offset_top = 556.0
+offset_right = 231.0
+offset_bottom = 596.0
+key_display = "s"
+key_to_press = "left_retract"
+
+[node name="Arrow" parent="ui/controls/keypress2" index="1"]
+position = Vector2(3.8147e-06, 51)
+rotation = -3.14159
+
+[node name="keypress4" parent="ui/controls" instance=ExtResource("8_ycdy4")]
+offset_left = 995.0
+offset_top = 556.0
+offset_right = 1035.0
+offset_bottom = 596.0
+key_display = "k"
+key_to_press = "right_retract"
+
+[node name="Arrow" parent="ui/controls/keypress4" index="1"]
+position = Vector2(-65, 51)
+rotation = -3.14159
+
+[node name="NinePatchRect" type="NinePatchRect" parent="ui/controls"]
+visible = false
+layout_mode = 0
+offset_left = 295.0
+offset_top = 443.0
+offset_right = 366.0
+offset_bottom = 513.0
+texture = ExtResource("9_w48qg")
+patch_margin_left = 15
+patch_margin_top = 15
+patch_margin_right = 15
+patch_margin_bottom = 15
+
+[node name="opening" type="Control" parent="ui"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="score" type="Label" parent="ui/opening"]
+layout_mode = 0
+offset_left = 299.0
+offset_top = 222.0
+offset_right = 859.0
+offset_bottom = 344.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_fonts/font = ExtResource("2_lquwl")
+theme_override_font_sizes/font_size = 64
+text = "[insert game logo]"
+
+[node name="multiplier" type="Label" parent="ui/opening"]
+layout_mode = 0
+offset_left = 436.0
+offset_top = 347.0
+offset_right = 724.0
+offset_bottom = 410.0
+theme_override_fonts/font = ExtResource("2_lquwl")
+theme_override_font_sizes/font_size = 24
+text = "pull rope taut to begin.
+(press s + k)"
+horizontal_alignment = 1
+
+[node name="tutorial1" type="Control" parent="ui"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="multiplier" type="Label" parent="ui/tutorial1"]
+layout_mode = 0
+offset_left = 408.0
+offset_top = 313.0
+offset_right = 755.0
+offset_bottom = 376.0
+theme_override_fonts/font = ExtResource("2_lquwl")
+theme_override_font_sizes/font_size = 24
+text = "release the rope into the pond
+(press w and i)"
+horizontal_alignment = 1
+
+[node name="tutorial2" type="Control" parent="ui"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="multiplier" type="Label" parent="ui/tutorial2"]
+layout_mode = 0
+offset_left = 340.0
+offset_top = 311.0
+offset_right = 826.0
+offset_bottom = 374.0
+theme_override_fonts/font = ExtResource("2_lquwl")
+theme_override_font_sizes/font_size = 24
+text = "guide the fish to the bottom of the screen.
+(tap the rope keys to corral it gently!)"
+horizontal_alignment = 1
+
+[node name="tutorial3" type="Control" parent="ui"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="multiplier" type="Label" parent="ui/tutorial3"]
+layout_mode = 0
+offset_left = 408.0
+offset_top = 219.0
+offset_right = 750.0
+offset_bottom = 282.0
+theme_override_fonts/font = ExtResource("2_lquwl")
+theme_override_font_sizes/font_size = 24
+text = "when the fish flashes red,
+it's in the capturing zone!"
+horizontal_alignment = 1
+
+[node name="multiplier2" type="Label" parent="ui/tutorial3"]
+layout_mode = 0
+offset_left = 363.0
+offset_top = 317.0
+offset_right = 798.0
+offset_bottom = 413.0
+theme_override_fonts/font = ExtResource("2_lquwl")
+theme_override_font_sizes/font_size = 24
+text = "pull rope REALLY HARD when fishes are there to capture the fish."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="tutorial4" type="Control" parent="ui"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="multiplier" type="Label" parent="ui/tutorial4"]
+layout_mode = 0
+offset_left = 408.0
+offset_top = 219.0
+offset_right = 750.0
+offset_bottom = 282.0
+theme_override_fonts/font = ExtResource("2_lquwl")
+theme_override_font_sizes/font_size = 24
+text = "gain score by catching fish"
+horizontal_alignment = 1
+
+[node name="multiplier2" type="Label" parent="ui/tutorial4"]
+layout_mode = 0
+offset_left = 363.0
+offset_top = 277.0
+offset_right = 798.0
+offset_bottom = 373.0
+theme_override_fonts/font = ExtResource("2_lquwl")
+theme_override_font_sizes/font_size = 24
+text = "catch multiple fish at once for different combos & higher scores!"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="tutorial5" type="Control" parent="ui"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="multiplier" type="Label" parent="ui/tutorial5"]
+layout_mode = 0
+offset_left = 395.0
+offset_top = 219.0
+offset_right = 771.0
+offset_bottom = 315.0
+theme_override_fonts/font = ExtResource("2_lquwl")
+theme_override_font_sizes/font_size = 24
+text = "combos also give you multipliers so you can get even higher scores."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="tutorial6" type="Control" parent="ui"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="multiplier" type="Label" parent="ui/tutorial6"]
+layout_mode = 0
+offset_left = 395.0
+offset_top = 219.0
+offset_right = 771.0
+offset_bottom = 315.0
+theme_override_fonts/font = ExtResource("2_lquwl")
+theme_override_font_sizes/font_size = 24
+text = "catching fish also increases the timer.
+
+score as high as you can before the timer runs out!
+
+ready? pull rope taut to begin."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="catch" type="Node2D" parent="ui"]
+script = ExtResource("2_272bh")
+
+[node name="one" type="Node2D" parent="ui/catch"]
+visible = false
+
+[node name="fish_sprite" parent="ui/catch/one" instance=ExtResource("3_4c57u")]
+position = Vector2(568, 353)
+
+[node name="two" type="Node2D" parent="ui/catch"]
+visible = false
+
+[node name="fish_sprite" parent="ui/catch/two" instance=ExtResource("3_4c57u")]
+position = Vector2(472, 324)
+
+[node name="fish_sprite2" parent="ui/catch/two" instance=ExtResource("3_4c57u")]
+position = Vector2(671, 360)
+
+[node name="three" type="Node2D" parent="ui/catch"]
+visible = false
+
+[node name="fish_sprite" parent="ui/catch/three" instance=ExtResource("3_4c57u")]
+position = Vector2(407, 411)
+
+[node name="fish_sprite2" parent="ui/catch/three" instance=ExtResource("3_4c57u")]
+position = Vector2(695, 430)
+
+[node name="fish_sprite3" parent="ui/catch/three" instance=ExtResource("3_4c57u")]
+position = Vector2(554, 318)
+
+[node name="more" type="Node2D" parent="ui/catch"]
+visible = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ui/catch"]
+offset_left = 61.0
+offset_top = 43.0
+offset_right = 1062.0
+offset_bottom = 295.0
+theme_override_fonts/normal_font = ExtResource("2_lquwl")
+theme_override_font_sizes/normal_font_size = 80
+bbcode_enabled = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="anim" type="AnimationPlayer" parent="ui/catch"]
+
+[node name="gameover" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="gameover"]
+layout_mode = 0
+offset_left = 372.0
+offset_top = 266.0
+offset_right = 412.0
+offset_bottom = 289.0
+theme_override_fonts/font = ExtResource("2_lquwl")
+text = "THE END. u ran out of time.
+good work tho."
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_kek77")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="pond" parent="." instance=ExtResource("2_1bvp3")]
+transform = Transform3D(2.17546, 0, 0, 0, 2.17546, 0, 0, 0, 2.17546, -2.79445, 0, -13.5974)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.99762, -0.0689467, -0.000114702, 0.0493265, 0.712562, 0.699873, -0.0481722, -0.698213, 0.714268, -0.193684, 17.0574, 14.9493)
+current = true
+fov = 63.0
+
+[node name="test camera" type="Camera3D" parent="."]
+transform = Transform3D(0.0733965, -0.380138, 0.922013, 0.0236413, 0.92491, 0.379451, -0.997023, -0.00605278, 0.0768721, 14.3419, 9.3606, -2.26437)
+fov = 63.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_el166")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.116359, 0.993207, 0, -0.993207, -0.116359, 4.26779, 20.1795, 13.5389)
+
+[node name="rope" parent="." instance=ExtResource("3_lquwl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.18589, 13.0706, 13.4554)
+environment_collision = NodePath("../pond/outside/StaticBody3D")
+segmentNumber = 30
+segmentLength = 0.25
+left_hand = NodePath("../left_hand")
+right_hand = NodePath("../right_hand")
+
+[node name="left_hand" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.95366, 8.57929, 13.967)
+
+[node name="right_hand" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6403, 8.57929, 13.555)
+
+[node name="attraction" type="Area3D" parent="." groups=["attraction"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.9872, 12.5011)
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("5_lquwl")
+collection = NodePath("../collection")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="attraction"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.249198, -0.161867, -0.427472)
+shape = SubResource("CapsuleShape3D_1bvp3")
+debug_color = Color(0, 0.6, 0.701961, 0.752941)
+
+[node name="collection" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.098, 12.0087)
+
+[node name="fish_spawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.25251, 7.991, -4.22194)
+
+[node name="fish_spawn2" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.6664, 7.991, -5.82974)
+
+[node name="center" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.17799, 7.991, -8.07649)
+
+[connection signal="area_entered" from="attraction" to="." method="_on_attraction_area_entered"]
+[connection signal="area_entered" from="attraction" to="attraction" method="_on_area_entered"]
+
+[editable path="ui/controls/keypress3"]
+[editable path="ui/controls/keypress2"]
+[editable path="ui/controls/keypress4"]
+[editable path="pond"]

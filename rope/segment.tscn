@@ -1,0 +1,44 @@
+[gd_scene load_steps=9 format=3 uid="uid://bq6jvvdc83knp"]
+
+[ext_resource type="Texture2D" uid="uid://d1xoljgyf5v3f" path="res://rope/rope.png" id="1_262mo"]
+[ext_resource type="Script" uid="uid://ckclbussm8mfk" path="res://rope/segment.gd" id="1_r5gac"]
+[ext_resource type="Shader" uid="uid://doksdep1pslhv" path="res://outline.gdshader" id="3_c5xw1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c5xw1"]
+albedo_texture = ExtResource("1_262mo")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r5gac"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_macth"]
+material = SubResource("StandardMaterial3D_r5gac")
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.5
+radial_segments = 8
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_r5gac"]
+height = 0.516663
+radius = 0.104004
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5jdkn"]
+render_priority = 0
+shader = ExtResource("3_c5xw1")
+
+[node name="segment" type="MeshInstance3D" groups=["segment"]]
+material_override = SubResource("StandardMaterial3D_c5xw1")
+mesh = SubResource("CylinderMesh_macth")
+script = ExtResource("1_r5gac")
+
+[node name="segment_collision" type="AnimatableBody3D" parent="." groups=["segment_collision"]]
+collision_layer = 2
+collision_mask = 0
+sync_to_physics = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="segment_collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.000951648, 0)
+shape = SubResource("CylinderShape3D_r5gac")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_5jdkn")
+mesh = SubResource("CylinderMesh_macth")
