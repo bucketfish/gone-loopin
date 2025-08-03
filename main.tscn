@@ -216,6 +216,18 @@ text = "pull rope taut to begin.
 (press s + k)"
 horizontal_alignment = 1
 
+[node name="multiplier2" type="Label" parent="ui/opening"]
+layout_mode = 0
+offset_left = 418.0
+offset_top = 543.0
+offset_right = 745.0
+offset_bottom = 606.0
+theme_override_fonts/font = ExtResource("2_lquwl")
+theme_override_font_sizes/font_size = 24
+text = "already know how to play?
+release rope to skip tutorial!"
+horizontal_alignment = 1
+
 [node name="tutorial1" type="Control" parent="ui"]
 visible = false
 anchors_preset = 0

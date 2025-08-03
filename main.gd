@@ -64,11 +64,12 @@ func start_game():
 			spawn_fish()
 			
 	var tween = create_tween().set_parallel(true)
+	tween.tween_property($ui/opening, "modulate:a", 0.0, 0.2)
 	tween.tween_property($ui/tutorial6, "modulate:a", 0.0, 0.2)
 	
-	#tween.tween_property($ui/multiplier, "modulate:a", 1.0, 0.2)
-	#tween.tween_property($ui/score, "modulate:a", 1.0, 0.2)
-	#tween.tween_property($ui/timer, "modulate:a", 1.0, 0.2)
+	tween.tween_property($ui/multiplier, "modulate:a", 1.0, 0.2)
+	tween.tween_property($ui/score, "modulate:a", 1.0, 0.2)
+	tween.tween_property($ui/timer, "modulate:a", 1.0, 0.2)
 	game_phase = "game"
 	await tween.finished 
 	tween.kill()
@@ -335,7 +336,9 @@ func catch_fish():
 					start_tutorial6()
 
 func many_segments():
-	if game_phase == "tutorial1":
+	if game_phase == "opening":
+		start_game()
+	elif game_phase == "tutorial1":
 		start_tutorial2()
 		
 func spawn_fish():
