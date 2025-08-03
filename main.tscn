@@ -110,18 +110,19 @@ self_modulate = Color(1, 1, 1, 0.247059)
 position = Vector2(576, 50)
 texture = ExtResource("6_4c57u")
 
-[node name="score" type="Label" parent="ui"]
+[node name="score" type="RichTextLabel" parent="ui"]
 layout_mode = 0
 offset_left = 84.0
 offset_top = 46.0
-offset_right = 145.0
-offset_bottom = 168.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+offset_right = 1073.0
+offset_bottom = 203.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 16
-theme_override_fonts/font = ExtResource("2_lquwl")
-theme_override_font_sizes/font_size = 64
-text = "0"
+theme_override_fonts/normal_font = ExtResource("2_lquwl")
+theme_override_font_sizes/normal_font_size = 64
+bbcode_enabled = true
+text = "120"
+autowrap_mode = 1
 script = ExtResource("7_efxa6")
 
 [node name="controls" type="Control" parent="ui"]
@@ -219,11 +220,11 @@ horizontal_alignment = 1
 [node name="multiplier2" type="Label" parent="ui/opening"]
 layout_mode = 0
 offset_left = 418.0
-offset_top = 543.0
+offset_top = 566.0
 offset_right = 745.0
-offset_bottom = 606.0
+offset_bottom = 629.0
 theme_override_fonts/font = ExtResource("2_lquwl")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 16
 text = "already know how to play?
 release rope to skip tutorial!"
 horizontal_alignment = 1
@@ -342,6 +343,7 @@ horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="tutorial6" type="Control" parent="ui"]
+visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -409,21 +411,35 @@ vertical_alignment = 1
 [node name="anim" type="AnimationPlayer" parent="ui/catch"]
 
 [node name="gameover" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="Label2" type="Label" parent="gameover"]
+layout_mode = 0
+offset_left = 330.0
+offset_top = 326.0
+offset_right = 826.0
+offset_bottom = 455.0
+theme_override_fonts/font = ExtResource("2_lquwl")
+theme_override_font_sizes/font_size = 24
+text = "congrats & thank you for playing :)
+
+gone loopin' was made by bucketfish for gmtk 2025 (loop)."
+horizontal_alignment = 1
+autowrap_mode = 3
+
 [node name="Label" type="Label" parent="gameover"]
 layout_mode = 0
-offset_left = 372.0
-offset_top = 266.0
-offset_right = 412.0
-offset_bottom = 289.0
+offset_left = 427.0
+offset_top = 542.0
+offset_right = 748.0
+offset_bottom = 572.0
 theme_override_fonts/font = ExtResource("2_lquwl")
-text = "THE END. u ran out of time.
-good work tho."
+theme_override_font_sizes/font_size = 24
+text = "pull rope taut to play again!"
+horizontal_alignment = 1
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_kek77")

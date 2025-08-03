@@ -44,6 +44,7 @@ func _ready():
 	$ui/tutorial4.modulate.a = 0.0
 	$ui/tutorial5.modulate.a = 0.0
 	$ui/tutorial6.modulate.a = 0.0
+	$gameover.modulate.a = 0.0
 	
 	$ui/tutorial1.visible = true 
 	$ui/tutorial2.visible = true 
@@ -51,14 +52,39 @@ func _ready():
 	$ui/tutorial4.visible = true 
 	$ui/tutorial5.visible = true
 	$ui/tutorial6.visible = true
-	pass
+	
+	$gameover.visible = true
+
 
 func end_game():
-	$gameover.visible = true
-	get_tree().paused = true
+	var tween = create_tween().set_parallel(true)
+	tween.tween_property($ui/timer, "modulate:a", 0.0, 0.2)
+	
+	tween.tween_property($gameover, "modulate:a", 1.0, 0.2)
+	
+	kill_all_fish()
+	
+	tween.tween_property($ui/score, "position:y", $ui/score.end_pos.y, 0.2)
+	$ui/score.end_game()
+	tween.tween_property($ui/multiplier, "modulate:a", 0.0, 0.2)
+	#tween.tween_property($ui/score, "modulate:a", 1.0, 0.2)
+	#tween.tween_property($ui/timer, "modulate:a", 1.0, 0.2)
+	game_phase = "end"
+	await tween.finished 
+	tween.kill()
+	
+	
 	
 
 func start_game():
+	
+	timer = 60.0 
+	score = 0
+	multiplier = 1.0
+	catch_timer = 0.0
+	
+	
+	
 	for i in range(10):
 		if get_tree().get_nodes_in_group("fish").size() < 10:
 			spawn_fish()
@@ -161,7 +187,9 @@ func start_tutorial6():
 	
 func _process(delta):
 	
-	if game_phase in ["opening", "tutorial1", "tutorial2", "tutorial3", "tutorial4", "tutorial5", "tutorial6"]:
+	if Input.is_action_just_pressed("debug"):
+		timer -= 55
+	if game_phase in ["opening", "tutorial1", "tutorial2", "tutorial3", "tutorial4", "tutorial5", "tutorial6", "end"]:
 		rope_pulling()
 	
 	elif game_phase == "game":
@@ -250,10 +278,28 @@ var combos = { # score = 5x of multiplier
 	"other": 10
 }
 
+func return_end_items():
+	var tween = create_tween().set_parallel(true)
+	tween.tween_property($gameover, "modulate:a", 0.0, 0.2)
+	
+	
+	tween.tween_property($ui/score, "position:y", $ui/score.game_pos.y, 0.2)
+	$ui/score.backto_game()
+	tween.tween_property($ui/multiplier, "modulate:a", 1.0, 0.2)
+	#tween.tween_property($ui/score, "modulate:a", 1.0, 0.2)
+	#tween.tween_property($ui/timer, "modulate:a", 1.0, 0.2)
+	await tween.finished 
+	tween.kill()
+	
+	
 func catch_fish():
 	
 	if game_phase == "opening":
 		start_tutorial1()
+		
+	elif game_phase == "end":
+		return_end_items()
+		start_game()
 	
 	elif game_phase == "tutorial3":
 		var fish_type = ""
