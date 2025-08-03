@@ -7,9 +7,10 @@ var length = 0
 @onready var body = $body
 
 func _ready():
-	$body.mesh.top_radius = start
-	$body.mesh.bottom_radius = end 
-	$body.mesh.height = length
+	if $body.mesh is CylinderMesh:
+		$body.mesh.top_radius = start
+		$body.mesh.bottom_radius = end 
+		$body.mesh.height = length
 
 
 func pulse():

@@ -17,7 +17,7 @@ const FRICTION = 0.05
 @export var fish_shape : Array[float] = []
 
 var fish_body_scene = preload("res://fish/fish_body.tscn")
-
+var fish_tail_scene = preload("res://fish/fish_tail.tscn")
 var countdown = 0.0 
 var count_to = 0.0
 
@@ -36,7 +36,7 @@ var textures = {
 }
 
 func _ready():
-	for i in range(len(fish_shape) - 1):
+	for i in range(len(fish_shape) - 2):
 		var new_body = fish_body_scene.instantiate()
 		new_body.start = fish_shape[i]
 		new_body.end = fish_shape[i+1]
@@ -44,6 +44,13 @@ func _ready():
 		add_child(new_body)
 		new_body.body.material_override = textures[fish_type]
 		body_segments.append(new_body)
+	
+	
+	var new_body = fish_tail_scene.instantiate()
+	new_body.length = segment_spacing 
+	add_child(new_body)
+	new_body.body.material_override = textures[fish_type]
+	body_segments.append(new_body)
 		
 
 	var velocity = Vector3(randf_range(-0.02, 0.02), 0, randf_range(-0.02, 0.02))

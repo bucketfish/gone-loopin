@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://cj4ul0kk8umee"]
+
+[ext_resource type="PackedScene" uid="uid://dch413nc7syvy" path="res://fish/fish_body.tscn" id="1_4wd23"]
+[ext_resource type="ArrayMesh" uid="uid://dhgek15ltfxvh" path="res://fish/fish_tail.res" id="2_scb5u"]
+
+[node name="fish_tail" instance=ExtResource("1_4wd23")]
+
+[node name="body" parent="." index="0"]
+mesh = ExtResource("2_scb5u")
+
+[node name="body2" parent="." index="1"]
+mesh = ExtResource("2_scb5u")
+
+[node name="body3" parent="." index="2"]
+transform = Transform3D(2.86603e-15, 6.55671e-08, -1.5, 1.5, -6.55671e-08, 1.37643e-21, -6.55671e-08, -1.5, -6.55671e-08, 0, 0, 0)
+mesh = ExtResource("2_scb5u")
+
+[node name="body4" parent="." index="3"]
+transform = Transform3D(2.86603e-15, 6.55671e-08, -1.5, 1.5, -6.55671e-08, 1.37643e-21, -6.55671e-08, -1.5, -6.55671e-08, 0, 0, 0)
+mesh = ExtResource("2_scb5u")
